@@ -7,7 +7,7 @@ Conteúdo desenvolvido durante a matéria de PBL de Sistemas Digitais.
 > - Júlia Carneiro Gonçalves de Souza
 > - Thiago Souza Rodrigues.
 
-Introdução
+#Introdução
 
 
 A indústria de jogos digitais tem sido um motor do entretenimento, impulsionando a inovação e criatividade ao longo dos anos. Com avanços tecnológicos contínuos, os jogos de última geração continuam a oferecer experiências imersivas e visualmente deslumbrantes para os jogadores. No entanto, mesmo com todos esses avanços, há uma tendência notável em direção aos jogos clássicos que resistiram ao teste do tempo.
