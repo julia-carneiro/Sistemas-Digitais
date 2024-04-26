@@ -30,6 +30,7 @@ int PegarMovimento(char data[3], int vetor[4], int control) {
     x = data[1];
     y = data[2];
 
+    //  verifica se pode fazer o movimento com a variavel control e se estar dentro dos limites da matriz
     if (x > SENSI && control == 0 && direita < 2) {
         direita += 1;
         control +=1;
@@ -55,6 +56,7 @@ int PegarMovimento(char data[3], int vetor[4], int control) {
     return control;
 }
 
+// Verifica qual botão do mouse foi "clicado" (direito, esquerdo ou meio)
  int exibirCliqueMouse(char data){
     if (data & 0x02){
         return 2;
@@ -63,7 +65,6 @@ int PegarMovimento(char data[3], int vetor[4], int control) {
     }else if (data & 0x04){
         return 3;
     }
-
     return 0;
  }
 
@@ -75,12 +76,13 @@ int FazerMovimento(char data[3], int movimento[4], int posicao_mouse[3][3], int 
     int esquerda = movimento[1];
     int cima = movimento[2];
     int baixo = movimento[3];
-    
 
     if(x == 0 || y == 0){
         control = 0; 
-        LerMatriz(posicao_mouse, coordenadas);// encontra a posicao atual do mouse
-        int linha = coordenadas[0]; //Salva as posicoes
+        // Chama a função LerMatriz para encontrar a posicao atual do mouse
+        LerMatriz(posicao_mouse, coordenadas);
+        //Salva as posicoes
+        int linha = coordenadas[0]; 
         int coluna = coordenadas[1];
         posicao_mouse[linha][coluna] = 0;     
 
