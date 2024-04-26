@@ -101,7 +101,7 @@ Um mouse é composto por um sensor óptico (ou laser), botões e uma placa de ci
 
 ![Diagrama em bloco USB3300](img/Diagrama_USB3300.jpg)
 
-: Imagem : Diagrama de blocos USB3300 :
+Imagem : Diagrama de blocos USB3300 
 
 
 
