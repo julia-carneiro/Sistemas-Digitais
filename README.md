@@ -80,9 +80,7 @@ Ao compilar e executar um programa escrito em C, o processamento ocorre no proce
 
 Imagem : Kit de desenvolvimento DE1-SOC
 
-
 Mouse
-
 
 Sendo assim, é preciso entender como ter acesso às informações do mouse conectado à porta USB do kit.
 
