@@ -73,7 +73,7 @@ O periférico utilizado para o desenvolvimento desse projeto foi a porta USB, pa
 ### Placa DE1-SOC
 
 
-Conforme discutido nas seções anteriores, o projeto fez uso do kit de desenvolvimento DE1-SOC, que inclui um processador ARM Cortex-A9 dual-core. Este processador é responsável pela execução do sistema operacional Linux e de outras aplicações de software na placa. Além disso, o kit conta com uma FPGA da família Intel Cyclone V, que possui diversos periféricos, como switches e portas USB, os quais foram utilizados no projeto.
+Conforme discutido nas seções anteriores, o projeto fez uso do kit de desenvolvimento DE1-SOC, que inclui um processador ARM Cortex-A9 dual-core. Este processador é responsável pela execução do sistema operacional Linux e de outras aplicações de software na placa. Além disso, o kit conta com uma FPGA da família Intel Cyclone V, que possui diversos periféricos, como switches, os quais foram utilizados no projeto.
 
 
 Ao compilar e executar um programa escrito em C, o processamento ocorre no processador ARM. No entanto, para acessar os periféricos presentes na FPGA, é necessário que o processador se comunique continuamente com a FPGA. Essa comunicação é realizada geralmente por meio de interfaces específicas, como bridges HPS-to-FPGA.
