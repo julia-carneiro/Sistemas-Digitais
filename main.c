@@ -130,9 +130,10 @@ int EfetuarJogada(char jogo[3][3], int posicao_mouse[3][3], int jogador_atual){
             caracter = 'O';
         }
     }
-    
+
+    //Se a posição estiver livre faz a jogada
     if(jogo[linha][coluna] == ' '){
-        jogo[linha][coluna] = caracter; //faz jogada
+        jogo[linha][coluna] = caracter; 
     }
              
     return jogador_atual;
@@ -193,7 +194,7 @@ int VerificarVencedor(char jogo[3][3]) {
         }
     }
 
-    //Diagonal principal
+    //Verifica diagonal principal
     if (jogo[0][0] != ' ' && jogo[0][0] == jogo[1][1] && jogo[1][1] == jogo[2][2]) {
         if (jogo[0][0] == 'X')
             return 'X'; 
@@ -201,7 +202,7 @@ int VerificarVencedor(char jogo[3][3]) {
             return 'O'; 
     }
 
-    //Diagonal Secundária
+    //Verifica diagonal Secundária
     if (jogo[0][2] != ' ' && jogo[0][2] == jogo[1][1] && jogo[1][1] == jogo[2][0]) {
         if (jogo[0][2] == 'X'){
             return 'X'; 
@@ -232,19 +233,20 @@ void *pausarJogo(){
     while(1){
         int sw;
         SW_read(&sw);
+        // Verifica se a chave SW 1 da placa esta ativa
         if(sw == 1) 
         {  
-            global_pause = 1;
+            global_pause = 1; // Seta a variavel de controle do pause para ativo
             printf("  Jogo Pausado!\n");
- 
             while(global_pause){
                 SW_read(&sw);
+                // Verifica se a chave SW 1 da placa foi desativada
                 if(sw == 0){ 
                     printf("\x1b[1F"); // Move to beginning of previous line
                     printf("\x1b[2K"); // Clear entire line
                     printf("Em jogo\n");
                     printf("\x1b[1F"); // Move to beginning of previous line
-            
+                    // Se a chave foi desativada seta a variavel de controle para zero para sair do pause
                     global_pause = 0;
                 }
             }
@@ -286,11 +288,13 @@ int main(){
 
     int control = 0; //Variavel global
     int byte;
-    int fd = open("/dev/input/mice", O_RDONLY);
+    int fd = open("/dev/input/mice", O_RDONLY); //  Abre o arquivo do dispositvo apenas para leitura das ações
+    // Retorna -1 caso o arquivo não consiga ser aberto
     if(fd == -1){
         printf("Nao foi possivel abrir o arquivo!\n");
     }
 
+    // Cria thread assincrona para supervisionar se o jogo foi pausado 
     if(pthread_create(&thread_pause, NULL, pausarJogo, NULL)){
         printf("Erro ao criar thread.");
     } 
@@ -298,14 +302,15 @@ int main(){
     telaInicial();
 
     while(1){
-    
+        //Faz a leitura do fd e armazena no data onde os dados serão lidos
         byte = read(fd,data,sizeof(data)); 
        
         if(global_pause == 0){
             control = PegarMovimento(data, movimento, control); //percorrer esse vetor para ver qual foi a jogada do jogador atual
-            control = FazerMovimento(data, movimento, posicao_mouse, control);
+            control = FazerMovimento(data, movimento, posicao_mouse, control); // função que percorre a matriz para verificar se o movimento pode ser feito
             clique = exibirCliqueMouse(data[0]);
-        
+
+            // se o retorno da função de verificar o "clique" do mouse for 1 a jogada podera ser efetuada 
             if(clique == 1) 
             {   
                 jogador_atual = EfetuarJogada(jogo, posicao_mouse, jogador_atual);
@@ -317,7 +322,8 @@ int main(){
             vencedor = VerificarVencedor(jogo); 
             
             ImprimirJogo(jogo, posicao_mouse, jogador_atual);  
-            
+
+            // Printa o vencedor da partida 
             if (vencedor == 'X' || vencedor == 'O'){
                 printf("\n\n\nJogador %c venceu!\n\n\n", vencedor);
             }
