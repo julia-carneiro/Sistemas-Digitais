@@ -22,6 +22,7 @@ void LerMatriz(int posicao_mouse[][3], int coordenadas[]){
     }
 }
 
+//Adiciona ao vetor os movimentos feito pelo jogador - cada posição do vetor é um movimento no jogo (direita, esquerda, cima, baixo)
 int PegarMovimento(char data[3], int vetor[4], int control) {
     signed char x, y;
     int direita = 0, esquerda = 0, cima = 0, baixo = 0;
