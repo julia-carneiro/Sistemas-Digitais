@@ -55,7 +55,7 @@ Ferramentas utilizadas:
 
 
 
-
+![Fluxograma do jogo](img/Fluxograma_do_jogo.jpg)
 Imagem : Fluxograma do Jogo
 
 
@@ -77,7 +77,7 @@ Ao compilar e executar um programa escrito em C, o processamento ocorre no proce
 
 
 
-
+![Kit de desenvolvimento DE1-SOC](img/kit_de_desenvolvimento.png)
 Imagem : Kit de desenvolvimento DE1-SOC
 
 Mouse
@@ -86,7 +86,7 @@ Sendo assim, é preciso entender como ter acesso às informações do mouse cone
 
 
 
-
+![Fluxograma dos dados recebidos pelo mouse](img/Fluxo_dados_mouse.jpg)
 Imagem :
 
 
@@ -94,7 +94,7 @@ Um mouse é composto por um sensor óptico (ou laser), botões e uma placa de ci
 
 
 
-
+![Diagrama em blobo USB3300](img/Diagrama_USB3300.jpg)
 Imagem :
 
 
@@ -107,12 +107,12 @@ Observando o arquivo dev/input/mice por meio do comando cat percebemos que o ter
 
 
 
-
+![Saida do arquivo mice](img/saida_mice.png)
 Imagem  : Saída do arquivo mice aberto com comando cat.
 
 
 
-
+![Saida do arquivo mice junto com comando od](img/saida_mice02.png)
 Imagem  : Saída do arquivo mice aberto com comando cat junto ao comando od.
 
 
@@ -125,7 +125,7 @@ Além do mouse, foram utilizados periféricos conectados à FPGA da placa, os sw
 
 Dentro do arquivo SW.h existem funções wrapper que possibilitam acessar os dados que indicam o estado do switch (ligado/desligado). Utilizando a função SW\_read, foi possível acessar os dados provenientes do switch e implementar a funcionalidade de pausar o jogo. Assim, quando o switch está para cima, o jogo está pausado, e quando está para baixo, o jogo está em curso. É válido ressaltar que a função de pausar o jogo foi feita utilizando Threads, para que acontecesse de maneira assíncrona com o jogo.
 
-
+![Funções do SW](img/Codigo_switchs.png)
 Imagem : Documentação das funções para uso
 
 dos Switches na linguagem C
