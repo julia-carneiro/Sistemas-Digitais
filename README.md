@@ -82,6 +82,9 @@ Utilizando como um documento de endereçamento da GPU fornecido pelo professor, 
     <img src="img/enderecos2.png" />
 </p>
 
+### Mandando informações para a GPU
+No módulo kernel na função device_write o kernel acessa o arquivo GPU, onde a biblioteca salva as informações que devem ser enviadas para a GPU. Após ler os dados do arquivo eles são salvos em uma variável de 64 bits e em  seguida é dividido em duas variáveis de 32 bits, uma para cada barramento da GPU. Após dividir os dados eles são enviados para os barramentos através de ponterios que apontam para o endereço virtual dos barramentos.
+
 ## Instruções da GPU
 ### Escrita no Banco de Registradores (WBR):
 Essa instrução é responsável por configurar os registradores que armazenam as informações dos sprites e a cor base do background. Como essa cor base é armazenada no primeiro registrador do Banco, a instrução WBR segue a estrutura apresentada na figura abaixo, a primeira parte é referente a modificação da cor base do background, já a segunda parte é referente a adição de sprites à tela.
