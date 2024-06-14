@@ -224,6 +224,10 @@ Linux Kernel Module Programming - SolidusCode. Disponível em: https://www.youtu
 Alves, Gabriel Barreto; Dias, Anfranserai M.; Sarinho, Victor T. Desenvolvimento de uma Arquitetura Baseada em Sprites para criação de Jogos 2D em Ambientes Reconfiguraveis utilizando dispositivos FPGA. Feira de Santana, Ba: 2023.‌ 
 Disponível em: https://drive.google.com/file/d/1MlIlpB9TSnoPGEMkocr36EH9-CFz8psO/view. Acesso em: 14 jun. 2024.
 
+Memória Virtual: Mapeamento. Disponível em: <https://memoriavirtualunisc.blogspot.com/p/mapeamento.html>.
+
+‌
+
 
 --
 
