@@ -64,6 +64,14 @@ Neste projeto, os estudantes de Engenharia de Computação da matéria Sistemas 
 Módulos Kernel surgem da necessidade de estender a funcionalidade do kernel do sistema operacional para suportar novos dispositivos ou fornecer novas funcionalidades. 
 Assim, no contexto retratado, para realizar a comunicação entre o processador ARM (HPS) e a GPU embarcada na mesma FPGA é necessário o desenvolvimento desse módulo para o Linux. Além disso, para que essa comunicação seja realizada de maneira eficaz e segura entre o hardware e o sistema operacional, surge a necessidade de um driver de dispositivo, também essencial para a criação da biblioteca solicitada, abstraindo a complexidade na comunicação e apresentando uma interface de leitura/escrita padrão do Linux utilizada em qualquer comunicação hardware-software.
 
+### Mapeamento de memória virtual
+
+O processador apenas executa instruções e referencia dados residentes no espaço de endereçamento real; portanto, deve existir um mecanismo que transforme os endereços virtuais em endereços reais. Esse mecanismo, conhecido por mapeamento, permite traduzir um endereço localizado no espaço virtual para um associado no espaço real. Como conseqüência do mapeamento, um programa não mais precisa estar necessariamente em endereços contíguos na memória principal para ser executado.
+
+<p align="center">
+    <img src="img/mapeamento.png" />
+</p>
+
 Utilizando como um documento de endereçamento da GPU fornecido pelo professor, foi desenvolvido um código em C responsável por ambas as funções, gerar o módulo Kernel e o Driver.
 
 <p align="center">
