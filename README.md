@@ -69,7 +69,7 @@ Assim, no contexto retratado, para realizar a comunicação entre o processador 
 O processador apenas executa instruções e referencia dados residentes no espaço de endereçamento real; portanto, deve existir um mecanismo que transforme os endereços virtuais em endereços reais. Esse mecanismo, conhecido por mapeamento, permite traduzir um endereço localizado no espaço virtual para um associado no espaço real. Como conseqüência do mapeamento, um programa não mais precisa estar necessariamente em endereços contíguos na memória principal para ser executado.
 
 <p align="center">
-    <img src="img/mapeamento.png" />
+    <img src="img/mapeamento.jpg" />
 </p>
 
 Utilizando como um documento de endereçamento da GPU fornecido pelo professor, foi desenvolvido um código em C responsável por ambas as funções, gerar o módulo Kernel e o Driver.
