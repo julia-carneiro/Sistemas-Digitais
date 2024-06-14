@@ -53,7 +53,6 @@ Neste projeto, os estudantes de Engenharia de Computação da matéria Sistemas 
 
 * Testes e correções no funcionamento do código
 
-
 # Descrição do Projeto
 
 ## Processador Gráfico
@@ -117,7 +116,6 @@ Para que usuários consigam utilizar o código de maneira simples, uma bibliotec
 Ela é responsável por enviar uma cadeia de bits referente as instruções que o usuário utilizar para o kernel. Sendo assim, um arquivo nomeado "GPU" foi criado para que a biblioteca escreva as informações e o kernel consiga ter acessa a elas. 
 
 
-# Testes
 # Como utilizar?
 
 1\. Faça download dos arquivos no Kit FPGA DE1-SoC que já tenha a GPU previamente configurada. 
@@ -153,8 +151,15 @@ Ela é responsável por enviar uma cadeia de bits referente as instruções que 
     <img src="img/imgfinal.jpeg"/>
 </p>
 
-OBS: Caso queira criar uma imagem do zero, teste utilizar as instruções separadamente para entender o funcionamento. 
-Este é um exemplo de código de teste: 
+* Por fim, lembre se de que você não precisa editar nenhum arquivo, apenas use um arquivo main.c que tenha "biblioteca.c" incluída e utilize as funções que disponibilizamos. Caso precise consultar, o arquivo da biblioteca está disponibilizado e comentado de forma que qualquer um consegue entender! :) 
+
+# Testes
+
+* Ao longo do projeto diversos testes foram executados.
+* Uma das primeiras metas estabelecidas foi a criação do módulo kernel, e foram lá que os testes tiveram início. Inserindo uma cadeia de bits referente a uma instrução específica, conseguimos mostrar as primeiras imagens no monitor.
+* Depois avançamos para a contrução da biblioteca, na tentativa de estabelecer uma conexão entre o espaço do usuário com o kernel.
+
+Este é um exemplo de código de teste com instruções básicas: 
 
 ```C
 #include "biblioteca.c"
@@ -185,7 +190,11 @@ int main(){
     return 0;
 }
 ```
-* Por fim, lembre se de que você não precisa editar nenhum arquivo, apenas use um arquivo main.c que tenha "biblioteca.c" incluída e utilize as funções que disponibilizamos. Caso precise consultar, o arquivo da biblioteca está disponibilizado e comentado de forma que qualquer um consegue entender! :) 
+Ele deve resultar na seguinte imagem:
+
+<p align="center">
+    <img src="img/imgteste.jpeg"/>
+</p>
 
 # Resultados e Conclusão:
 
@@ -199,6 +208,14 @@ A respeitos dos requisitos esperados para este projeto, todos foram alcançados,
 Como possíveis melhorias desse projeto a diversas possibilidades, por se tratar da utilização de uma GPU para exibir imagens da tela, a uma grande quantidade de possibilidades. Uma possibilidade é utilizar o hardware da DE1-SoC para poder interagir com  a imagem que está sendo exibida na tela, podendo mover sprites ou polígonos a través de comandos no hardware, podendo até desenvolver um jogo simples.
 
 # Referências:
+
+Intel FPGA - Linux On DE Series Boards. Disponível em: [Linux_On_DE_Series_Boards](https://ftp.intel.com/Public/Pub/fpgaup/pub/Intel_Material/17.0/Tutorials/Linux_On_DE_Series_Boards.pdf). Acesso em: 10 jun. 2024
+
+Linux Kernel Module Programming - SolidusCode. Disponível em: https://www.youtube.com/playlist?list=PL16941B715F5507C5. Acesso em: 10 jun. 2024.
+
+Alves, Gabriel Barreto; Dias, Anfranserai M.; Sarinho, Victor T. Desenvolvimento de uma Arquitetura Baseada em Sprites para criação de Jogos 2D em Ambientes Reconfiguraveis utilizando dispositivos FPGA. Feira de Santana, Ba: 2023.‌ 
+Disponível em: https://drive.google.com/file/d/1MlIlpB9TSnoPGEMkocr36EH9-CFz8psO/view. Acesso em: 14 jun. 2024.
+
 
 --
 
