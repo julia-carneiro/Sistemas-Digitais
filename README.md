@@ -57,7 +57,9 @@ Neste projeto, os estudantes de Engenharia de Computação da matéria Sistemas 
 # Descrição do Projeto
 
 ## Processador Gráfico
-- imagem 
+<p align="center">
+    <img src="img/diagrama.png" />
+</p>
 
 ## Módulo Kernel 
 Módulos Kernel surgem da necessidade de estender a funcionalidade do kernel do sistema operacional para suportar novos dispositivos ou fornecer novas funcionalidades. 
@@ -65,9 +67,54 @@ Assim, no contexto retratado, para realizar a comunicação entre o processador 
 
 Utilizando como um documento de endereçamento da GPU fornecido pelo professor, foi desenvolvido um código em C responsável por ambas as funções, gerar o módulo Kernel e o Driver.
 
+<p align="center">
+    <img src="img/enderecos1.png" />
+</p>
+
+<p align="center">
+    <img src="img/enderecos2.png" />
+</p>
+
+## Instruções da GPU
+### Escrita no Banco de Registradores (WBR):
+Essa instrução é responsável por configurar os registradores que armazenam as informações dos sprites e a cor base do background. Como essa cor base é armazenada no primeiro registrador do Banco, a instrução WBR segue a estrutura apresentada na figura abaixo, a primeira parte é referente a modificação da cor base do background, já a segunda parte é referente a adição de sprites à tela.
+
+<p align="center">
+    <img src="img/wbr.png"/>
+</p>
+
+### Escrita na Memória de Sprites (WSM):
+Essa instrução armazena ou modifica o conteúdo presente na Memória de Sprites. O campo opcode é semelhante a instrução anterior, no entanto, seu valor é configurado em 0001. O campo endereço  de memória  ́ especifica qual local da memória será alterado. Os campos R, G e B definem as novas componentes RGB para o local desejado.
+
+<p align="center">
+    <img src="img/wsm.png"/>
+</p>
+
+### Escrita na Memória de Background (WBM):
+Essa instrução armazena ou modifica o conteúdo presente na Memória de Background. Sua função é configurar valores RGB para o preenchimento de áreas do background. Seus campos são semelhantes ao da instrução WSM a única diferença  está no campo de  endereço de memória  com tamanho de 12 bits. O valor do opcode é configurado como 0010. O background é dividido em pequenos blocos de 8x8 pixels e cada endereço de memória corresponde a um bloco. Sendo a resolução de 640x480 pixels, temos uma divisão de 80x60 blocos. 
+
+Isso permite que o background seja configurado de formas diferentes de acordo com o preenchimento da memória (Fig. 11). Se um endereço for preenchido com o valor 0b111111110 = 510, o Módulo de Desenho entenderá que o bloco correspondente está  desabilitado, assim ocupando os pixels da área com a cor base do background, um polígono ou sprite, caso suas coordenadas coincidam com o bloco.
+
+<p align="center">
+    <img src="img/wbm1.png"/>
+</p>
+
+### Definição de um Polıgono (DP):
+Essa instrução é utilizada para modificar o conteúdo da Memória de Instrução do Co-Processador (Fig. 6), de forma a definir os dados referentes a um polígono que deve ser renderizado. O valor do opcode é configurado como 0011. O campo endereço é utilizado para escolha da posição de memória em que a instrução será armazenada, possibilitando o controle da sobreposição dos polígonos. Os campos ref point X e ref point Y são usados para definir as coordenadas do ponto de referência do polígono. 
+
+O campo tamanho define a dimensão do polígono. Caso seu valor seja configurado como 0b0000, logo, o polígono que foi definido estará desabilitado. 
+
+Por último, as componentes RGB definem a cor do polígono, e o bit de forma define se o polígono corresponde a um quadrado = 0 ou triângulo = 1. 
+
+<p align="center">
+    <img src="img/dp.png"/>
+</p>
+
 ## Biblioteca 
 
-Para que usuários consigam utilizar o código de maneira simples, uma biblioteca foi criada - ela é responsável por enviar uma cadeia de bits referente as instruções que o usuário utilizar para o kernel. Sendo assim, um arquivo nomeado "GPU" foi criado para que a biblioteca escreva as informações 
+Para que usuários consigam utilizar o código de maneira simples, uma biblioteca foi criada. 
+
+Ela é responsável por enviar uma cadeia de bits referente as instruções que o usuário utilizar para o kernel. Sendo assim, um arquivo nomeado "GPU" foi criado para que a biblioteca escreva as informações e o kernel consiga ter acessa a elas. 
 
 # Como utilizar?
 1\. Faça download dos arquivos no Kit FPGA DE1-SoC que já tenha a GPU previamente configurada. 
