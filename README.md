@@ -116,7 +116,12 @@ Para que usuários consigam utilizar o código de maneira simples, uma bibliotec
 
 Ela é responsável por enviar uma cadeia de bits referente as instruções que o usuário utilizar para o kernel. Sendo assim, um arquivo nomeado "GPU" foi criado para que a biblioteca escreva as informações e o kernel consiga ter acessa a elas. 
 
+
+# Testes
+
+
 # Como utilizar?
+
 1\. Faça download dos arquivos no Kit FPGA DE1-SoC que já tenha a GPU previamente configurada. 
 
 2\. Abra um terminal remoto na pasta que você colocou os arquivos. 
@@ -131,6 +136,7 @@ Ela é responsável por enviar uma cadeia de bits referente as instruções que 
 * Para resolver isso e garantir que a build esteja completa, é só executar 'sudo date [mês][data][hora][minutos][ano]' (substitua pelas informações do dia que estiver testando) e rode o 'make' novamente.
 
 4\. Na primeira vez que executar o código, você precisará inserir o módulo kernel criado com a linha de comando 'sudo insmod kekel.ko'. 
+
 5\. Agora vamos criar o arquivo 'GPU': 
 * Digite 'dmesg' para conseguir ver as mensagens de retorno do módulo kernel, lá vamos encontrar a linha de comando necessária para criar o arquivo!
 
@@ -138,15 +144,61 @@ Ela é responsável por enviar uma cadeia de bits referente as instruções que 
     <img src="img/mknod.png"/>
 </p>
 
-Se atente apenas para a mensagem que contem 
+* Foque nas últimas mensagens e copie o comando de código que for fornecido - que segue este modelo: "mknod /dev/GPU c [major number] 0" 
+
+6\. Com o arquivo criado, já podemos compilar a main do projeto com o comando - 'gcc main.c -c main -std=c99'
+
+7\. Agora, rode o executável com 'sudo ./main'
+* Se você estiver usando a main que disponibilizamos no projeto, essa imagem deve começar a se formar na tela: 
+
+<p align="center">
+    <img src="img/imgfinal.jpeg"/>
+</p>
+
+OBS: Caso queira criar uma imagem do zero, teste utilizar as instruções separadamente para entender o funcionamento. 
+Este é um exemplo de código de teste: 
+
+```C
+#include "biblioteca.c"
+
+int main(){
+    //Testando background branco
+    wbr01(7,7,7);
+
+    //O bloco é definido a partir do endereço que você coloca.
+    for(int i = 0; i <2000; i++) {
+        wbm (0,0,7,1);
+    }
+
+    dp(1, 7, 0, 0, 0b0101, 320, 240, 0); // Triangulo vermelho
+    dp (0, 0, 7, 0, 0b0011, 200, 250, 1); // Quadrado verde
+    wbr02(100, 240, 4, 1, 6); //Sprite
+
+    //Editando um sprite - desenhando um quadrado com duas cores
+    for (int i = 1; i <= 200; i++) {
+        wsm (0, 7, 0, i);
+    for (int j = 200; j <= 400; j++) {
+        wsm (7, 7, 0, j);
+    }
+
+    //Adiciona sprite editado na tela
+    wbr02 (380, 40, 0, 1, 14);
+
+    return 0;
+}
+```
+* Por fim, lembre se de que você não precisa editar nenhum arquivo, apenas use um arquivo main.c que tenha "biblioteca.c" incluída e utilize as funções que disponibilizamos. Caso precise consultar, o arquivo da biblioteca está disponibilizado e comentado de forma que qualquer um consegue entender! :) 
 
 # Resultados e Conclusão:
 
---
+O resultado do trabalho desenvolvido é um programa que permite interação entre hardware e software  através do kit FPGA DE1-SoC. Através do desenvolvimento desse programa foi possível aprender a respeito de mapeamento de memória em uma arquitetura ARM, como utilizar a interface de conexão entre HPs e o FPGA da DE1-SoCe e outros diversos assuntos e conceitos que foram utilizados durante o processo de criação do projeto.
+
+A respeitos dos requisitos esperados para este projeto, todos foram alcançados, como, ter no mínimo uma função para cada instrução da GPU e a biblioteca seguir as recomendações que foram dadas. Por fim, o projeto final teve os resultados esperados e conseguiu atender aos requisitos que foram impostos.
+
 
 # Possíveis melhorias:
 
---
+Como possíveis melhorias desse projeto a diversas possibilidades, por se tratar da utilização de uma GPU para exibir imagens da tela, a uma grande quantidade de possibilidades. Uma possibilidade é utilizar o hardware da DE1-SoC para poder interagir com  a imagem que está sendo exibida na tela, podendo mover sprites ou polígonos a través de comandos no hardware, podendo até desenvolver um jogo simples.
 
 # Referências:
 
