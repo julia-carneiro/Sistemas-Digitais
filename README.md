@@ -123,7 +123,22 @@ Ela é responsável por enviar uma cadeia de bits referente as instruções que 
 
 3\. Digite o comando 'make'
 * Atenção! É possível que na primeira vez que você rode o código apareça esse aviso:
-  - imagem do erro de clock
+
+<p align="center">
+    <img src="img/erroclock.png"/>
+</p>  
+
+* Para resolver isso e garantir que a build esteja completa, é só executar 'sudo date [mês][data][hora][minutos][ano]' (substitua pelas informações do dia que estiver testando) e rode o 'make' novamente.
+
+4\. Na primeira vez que executar o código, você precisará inserir o módulo kernel criado com a linha de comando 'sudo insmod kekel.ko'. 
+5\. Agora vamos criar o arquivo 'GPU': 
+* Digite 'dmesg' para conseguir ver as mensagens de retorno do módulo kernel, lá vamos encontrar a linha de comando necessária para criar o arquivo!
+
+<p align="center">
+    <img src="img/mknod.png"/>
+</p>
+
+Se atente apenas para a mensagem que contem 
 
 # Resultados e Conclusão:
 
