@@ -118,8 +118,6 @@ Ela é responsável por enviar uma cadeia de bits referente as instruções que 
 
 
 # Testes
-
-
 # Como utilizar?
 
 1\. Faça download dos arquivos no Kit FPGA DE1-SoC que já tenha a GPU previamente configurada. 
