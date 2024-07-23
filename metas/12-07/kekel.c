@@ -50,14 +50,14 @@ int device_open(struct inode *inode, struct file *filp)
 // Função de escrita do dispositivo
 static ssize_t device_write(struct file *filp, unsigned long long *bufSourceData, size_t bufCount, loff_t *curOffSet)
 {
-    //printk(KERN_INFO "GPU: writing device");
+    printk(KERN_INFO "GPU: writing device");
     ret = copy_from_user(virtual_device.data, bufSourceData, bufCount);
 
     // Espera enquanto o buffer estiver cheio
-    while (*ptr_FULL)
-    {
-        printk(KERN_INFO "fila cheia");
-    }
+    // while (*ptr_FULL)
+    // {
+    //     printk(KERN_INFO "fila cheia");
+    // }
 
     // Extrai dados para escrever nos registradores de hardware
     unsigned long int dataA;
@@ -77,7 +77,7 @@ static ssize_t device_write(struct file *filp, unsigned long long *bufSourceData
 // Função de leitura do dispositivo
 ssize_t device_read(struct file *filp, char *bufStoreData, size_t bufCount, loff_t *curOffSet)
 {
-    //printk(KERN_INFO "GPU: reading from device");
+    printk(KERN_INFO "GPU: reading from device");
     ret = copy_to_user(bufStoreData, virtual_device.data, bufCount);
     return ret;
 }
@@ -85,7 +85,7 @@ ssize_t device_read(struct file *filp, char *bufStoreData, size_t bufCount, loff
 // Função de fechamento do dispositivo
 static int device_close(struct inode *inode, struct file *filp)
 {
-    //printk(KERN_ALERT "GPU: unloaded module");
+    printk(KERN_ALERT "GPU: unloaded module");
 }
 
 // Define as operações do dispositivo
