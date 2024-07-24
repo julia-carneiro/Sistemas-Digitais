@@ -277,8 +277,13 @@ int main() {
           wbr02(pos_x, pos_y, 18, 1, 1);
       
           // Define quando as Sprite vão ser geradas
-          tempo++;
-          if(tempo % 1000 == 0){
+          for(int i = 0; i <= 1000000; i++){
+            if(i == 1000000){
+              tempo++;    
+            }
+          }
+          
+          if(tempo % 10000 == 0){
             velocidade++;
           }
           
