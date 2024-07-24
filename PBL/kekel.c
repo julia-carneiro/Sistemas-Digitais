@@ -54,10 +54,10 @@ static ssize_t device_write(struct file *filp, unsigned long long *bufSourceData
     ret = copy_from_user(virtual_device.data, bufSourceData, bufCount);
 
     // Espera enquanto o buffer estiver cheio
-    // while (*ptr_FULL)
-    // {
-    //     printk(KERN_INFO "fila cheia");
-    // }
+     while (*ptr_FULL)
+     {
+         printk(KERN_INFO "fila cheia");
+     }
 
     // Extrai dados para escrever nos registradores de hardware
     unsigned long int dataA;
