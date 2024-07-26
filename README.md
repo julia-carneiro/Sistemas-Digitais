@@ -101,9 +101,17 @@ Para possibilitar a interação com os botões, foi necessário acessar diretame
 
 Assim, foram definidas constantes para a base da ponte lightweight, a extensão e o offset dos botões com base na documentação de endereçamento da GPU fornecida pelo professor e desenvolvido no código uma função responsável por acessar à memória, monitorar os botões e alterar as variáveis “iniciou” e “parar” responsáveis pelo controle do jogo.
 
+<p align="center">
+    <img src="img/endereco_btt.png"/>
+</p>  
+
 ## Display 7-segmentos
 
-Para configuração e utilização do display de 7-segmentos também se fez necessário realizar o processo de mapeamento de memória assim como feito nos push-buttons. Além disso, foi preciso a criação de uma função para decodificar números decimais em seu equivalente binário para o tipo de display usado
+Para configuração e utilização do display de 7-segmentos também se fez necessário realizar o processo de mapeamento de memória assim como feito nos push-buttons. Além disso, foi preciso a criação de uma função para decodificar números decimais em seu equivalente binário para o tipo de display usado.
+
+<p align="center">
+    <img src="img/enderecos_seg.png"/>
+</p>  
 
 # Como rodar o jogo?
 
