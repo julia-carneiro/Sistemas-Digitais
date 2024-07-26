@@ -95,13 +95,13 @@ Com esta instrução, acrescentamos o sprite de gasolina - um item que pode ser 
 Essa instrução armazena ou modifica o conteúdo presente na Memória de Background. Sua função é configurar valores RGB para o preenchimento de áreas do background. Seus campos são semelhantes ao da instrução WSM a única diferença está no campo de  endereço de memória  com tamanho de 12 bits. O background é dividido em pequenos blocos de 8x8 pixels e cada endereço de memória corresponde a um bloco. Sendo a resolução de 640x480 pixels, temos uma divisão de 80x60 blocos. 
 Com isto fomos capazes de criar as telas de início, pause e game over - cada pixel do desenho foi traduzido como código RGB e utilizado pela instrução. 
 
-# Push Buttons
+## Push Buttons
 
 Para possibilitar a interação com os botões, foi necessário acessar diretamente os registradores de hardware que os controlam. Portanto, deve existir um mecanismo que transforme os endereços virtuais em endereços reais. Esse mecanismo, conhecido por mapeamento, permite traduzir um endereço localizado no espaço virtual para um associado no espaço real. Como consequência do mapeamento, um programa não mais precisa estar necessariamente em endereços contíguos na memória principal para ser executado. Fazemos isso através do dispositivo /dev/mem no Linux, que permite mapeamento de memória física para o espaço de endereçamento virtual do processo. 
 
 Assim, foram definidas constantes para a base da ponte lightweight, a extensão e o offset dos botões com base na documentação de endereçamento da GPU fornecida pelo professor e desenvolvido no código uma função responsável por acessar à memória, monitorar os botões e alterar as variáveis “iniciou” e “parar” responsáveis pelo controle do jogo.
 
-# Display 7-segmentos
+## Display 7-segmentos
 
 Para configuração e utilização do display de 7-segmentos também se fez necessário realizar o processo de mapeamento de memória assim como feito nos push-buttons. Além disso, foi preciso a criação de uma função para decodificar números decimais em seu equivalente binário para o tipo de display usado
 
