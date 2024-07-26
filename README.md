@@ -159,6 +159,9 @@ Para configuração e utilização do display de 7-segmentos também se fez nece
 </p>
 
 * O cálculo que fizemos para conseguir adicionar colisão no nosso código:
+<p align ="center">
+    <img src="img/img_colisao.png"/>
+</p>
 
 
 # Resultados e Conclusão:
