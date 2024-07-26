@@ -163,6 +163,14 @@ Para configuração e utilização do display de 7-segmentos também se fez nece
     <img src="img/gif_jogo.gif"/>
 </p>
 
+
+Foram criados dois fluxogramas para desenvolver o produto. Um foi criado focado no funcionamento geral do jogo e o outro foi focado no funcionamento interno do jogo.
+*Fluxograma Geral
+<p align="center">
+    <img src="img/FluxogramaGeral.png"/>
+</p>
+
+
 * Testes que podem ser feito dentro do jogo:
  <p align="center">
     <img src="img/CasoDeTeste.png"/>
