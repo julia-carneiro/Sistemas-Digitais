@@ -159,9 +159,7 @@ Para configuração e utilização do display de 7-segmentos também se fez nece
 </p>
 
 * O cálculo que fizemos para conseguir adicionar colisão no nosso código:
-<p align="center">
-    <img src="blob:https://web.whatsapp.com/b30d06e0-39af-44ec-93d0-073740cb4e86"/>
-</p>
+
 
 # Resultados e Conclusão:
 
