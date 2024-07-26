@@ -105,6 +105,7 @@ Tela de pause
 <p align="center">
 Tela de game over
 </p>  
+
 ### 4\. Ajustes
 
 * Verificar jogabilidade do jogo.
