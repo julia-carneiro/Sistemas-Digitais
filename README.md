@@ -100,10 +100,9 @@ Utilizando como um documento de endereçamento da GPU fornecido pelo professor, 
     <img src="img/enderecos2.png" />
 </p>
 
-### Mandando informações para a GPU
-No módulo kernel na função device_write o kernel acessa o arquivo GPU, onde a biblioteca salva as informações que devem ser enviadas para a GPU. Após ler os dados do arquivo eles são salvos em uma variável de 64 bits e em  seguida é dividido em duas variáveis de 32 bits, uma para cada barramento da GPU. Após dividir os dados eles são enviados para os barramentos através de ponterios que apontam para o endereço virtual dos barramentos.
 
 ## Instruções da GPU
+
 ### Escrita no Banco de Registradores (WBR):
 Essa instrução é responsável por configurar os registradores que armazenam as informações dos sprites e a cor base do background. Como essa cor base é armazenada no primeiro registrador do Banco, a instrução WBR segue a estrutura apresentada na figura abaixo, a primeira parte é referente a modificação da cor base do background, já a segunda parte é referente a adição de sprites à tela.
 
@@ -127,25 +126,7 @@ Isso permite que o background seja configurado de formas diferentes de acordo co
     <img src="img/wbm1.png"/>
 </p>
 
-### Definição de um Polıgono (DP):
-Essa instrução é utilizada para modificar o conteúdo da Memória de Instrução do Co-Processador (Fig. 6), de forma a definir os dados referentes a um polígono que deve ser renderizado. O valor do opcode é configurado como 0011. O campo endereço é utilizado para escolha da posição de memória em que a instrução será armazenada, possibilitando o controle da sobreposição dos polígonos. Os campos ref point X e ref point Y são usados para definir as coordenadas do ponto de referência do polígono. 
-
-O campo tamanho define a dimensão do polígono. Caso seu valor seja configurado como 0b0000, logo, o polígono que foi definido estará desabilitado. 
-
-Por último, as componentes RGB definem a cor do polígono, e o bit de forma define se o polígono corresponde a um quadrado = 0 ou triângulo = 1. 
-
-<p align="center">
-    <img src="img/dp.png"/>
-</p>
-
-## Biblioteca 
-
-Para que usuários consigam utilizar o código de maneira simples, uma biblioteca foi criada. 
-
-Ela é responsável por enviar uma cadeia de bits referente as instruções que o usuário utilizar para o kernel. Sendo assim, um arquivo nomeado "GPU" foi criado para que a biblioteca escreva as informações e o kernel consiga ter acessa a elas. 
-
-
-# Como utilizar?
+# Como rodar o jogo?
 
 1\. Faça download dos arquivos no Kit FPGA DE1-SoC que já tenha a GPU previamente configurada. 
 
@@ -171,13 +152,13 @@ Ela é responsável por enviar uma cadeia de bits referente as instruções que 
 
 * Foque nas últimas mensagens e copie o comando de código que for fornecido - que segue este modelo: "mknod /dev/GPU c [major number] 0" 
 
-6\. Com o arquivo criado, já podemos compilar a main do projeto com o comando - 'gcc main.c -c main -std=c99'
+6\. Com o arquivo criado, já podemos compilar a main do projeto com o comando - 'gcc main.c -c main -std=c99 -lpthread'
 
 7\. Agora, rode o executável com 'sudo ./main'
-* Se você estiver usando a main que disponibilizamos no projeto, essa imagem deve começar a se formar na tela: 
-
+* Ao iniciar, essa tela teve aparecer:
+  
 <p align="center">
-    <img src="img/imgfinal.jpeg"/>
+    <img src="img/inicial.png"/>
 </p>
 
 * Por fim, lembre se de que você não precisa editar nenhum arquivo, apenas use um arquivo main.c que tenha "biblioteca.c" incluída e utilize as funções que disponibilizamos. Caso precise consultar, o arquivo da biblioteca está disponibilizado e comentado de forma que qualquer um consegue entender! :) 
