@@ -162,6 +162,7 @@ Para configuração e utilização do display de 7-segmentos também se fez nece
 <p align ="center">
     <img src="img/img_colisao.png"/>
 </p>
+Aqui fazemos a verificação se o eixo X de uma sprite ultrapassou o eixo X de outra sprite. O mesmo acontece no eixo Y.
 
 
 # Resultados e Conclusão:
