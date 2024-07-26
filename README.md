@@ -160,7 +160,7 @@ Para configuração e utilização do display de 7-segmentos também se fez nece
 
 * Testes que podem ser feito dentro do jogo:
  <p align="center">
-    <img src="img/CasoDeTeste"/>
+    <img src="img/CasoDeTeste.png"/>
 </p>
 
 * O cálculo que fizemos para conseguir adicionar colisão no nosso código:
