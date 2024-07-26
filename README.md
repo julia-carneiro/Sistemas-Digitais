@@ -165,7 +165,8 @@ Para configuração e utilização do display de 7-segmentos também se fez nece
 
 
 Foram criados dois fluxogramas para desenvolver o produto. Um foi criado focado no funcionamento geral do jogo e o outro foi focado no funcionamento interno do jogo.
-*Fluxograma Geral
+
+* Fluxograma Geral
 <p align="center">
     <img src="img/FluxogramaGeral.png"/>
 </p>
