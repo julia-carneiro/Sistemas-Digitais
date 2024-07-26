@@ -171,6 +171,10 @@ Foram criados dois fluxogramas para desenvolver o produto. Um foi criado focado 
     <img src="img/FluxogramaGeral.png"/>
 </p>
 
+* Fluxograma Interno
+<p align="center">
+    <img src="img/FluxogramaInterno.png"/>
+<p/>
 
 * Testes que podem ser feito dentro do jogo:
  <p align="center">
