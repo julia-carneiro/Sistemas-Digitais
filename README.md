@@ -8,14 +8,30 @@ Conteúdo desenvolvido durante a matéria de PBL de Sistemas Digitais.
 > - Thiago Souza Rodrigues.
 
 # Introdução
-As GPUs (Unidades de Processamento Gráfico) desempenham um papel fundamental em sistemas de computação gráfica, sendo projetadas para lidar com operações de computação gráfica e processamento de imagens de maneira eficiente. 
 
-O ex-aluno do curso de Engenharia de Computação na UEFS (Universidade Estadual de Feira de Santana) Gabriel Sá Barreto Alves, durante suas atividades de iniciação científica e em seu trabalho de conclusão de curso, projetou e implementou uma GPU capaz de mover e controlar elementos em um monitor VGA com resolução de 640x480 pixels. Esse processador foi projetado para desenhar dois tipos de polígonos convexos (quadrado e triângulo) e manipular uma quantidade determinada de sprites. Para realizar essas tarefas, Gabriel utilizou o NIOS II como unidade de processamento principal, que foi embarcada na mesma FPGA que o Processador Gráfico.
+O ex-aluno do curso de Engenharia de Computação na UEFS (Universidade Estadual de Feira de Santana) Gabriel Sá Barreto Alves, durante suas atividades de iniciação científica e em seu trabalho de conclusão de curso, projetou e implementou uma GPU capaz de mover e controlar elementos em um monitor VGA com resolução de 640x480 pixels. Esse processador foi projetado para desenhar dois tipos de polígonos convexos (quadrado e triângulo), além de editar, criar e manipular uma quantidade determinada de sprites. Para realizar essas tarefas, Gabriel utilizou o NIOS II como unidade de processamento principal, que foi embarcada na mesma FPGA que o Processador Gráfico.
 
-No entanto, a plataforma DE1-SoC, utilizada nesse projeto, possui um processador ARM (HPS) que elimina a necessidade do NIOS II. Essa mudança trouxe um novo desafio: Como o HPS irá se comunicar com o processador gráfico que está na FPGA? A solução para esse problema envolve a criação de um módulo de Kernel no HPS para permitir a comunicação eficiente com o processador gráfico. 
+Utilizando esse dispostivo, utilizamos uma biblioteca que foi devolvida para tornar mais intuitivo o uso das instruções e conseguir traduzir os dados enviados do modo de usuário para o modo de Kernel de modo que a GPU seja capaz de executá-las. 
+Com o intuito de aplicar a biblioteca, neste projeto criamos um jogo chamdo "Top Grilo", que é um jogo de ação com carros onde o jogador deve desviar e atirar em outros carros para receber uma pontuação, além disso, é preciso manter o tanque cheio - o jogador vai perdendo gasolina ao longo do tempo e precisa repor. 
 
-Neste projeto, os estudantes de Engenharia de Computação da matéria Sistemas Digitais estão encarregados de desenvolver tanto o módulo de Kernel garantindo que o HPS possa gerenciar o Processador Gráfico de maneira eficaz. Além disso, será necessário desenvolver uma biblioteca em C que contenha funções para cada instrução existente na GPU.
+# Como jogar?
+O jogador controla o movimento do carro com o mouse, podendo andar para qualquer direção dentro da pista. 
+- Inicia/Reiniciar: Push Button da placa - B0
+- Atirar: Click esquerdo do mouse
+- Pausar: Push Button da placa - B1
 
+# Requisitos do projeto
+
+1. ✅ O código deve ser escrito em linguagem C 
+2. ✅ O sistema só poderá utilizar os componentes disponíveis na placa 
+3. ✅ Um novo sprite deve ser colocado na memória e utilizado no jogo 
+4. ✅ As ações do ator do jogo (pulo, tiro, etc.) devem ser comandadas pelos botões do mouse 
+5. ✅ A variação da velocidade no movimento do mouse deve ser refletida na ação do ator do jogo. Por exemplo, no jogo breakout a barra se move com velocidade maior se o movimento do mouse for brusco 
+6. ✅ Informações do jogo (placar, vidas, etc.) devem ser exibidas no display de 7-segmentos 
+7. ✅ O jogo deve permitir ações do usuário através dos botões da DE1-SoC, no mínimo: a pausa, o retorno, o reinício e o término do jogo. 
+8. ✅ O usuário poderá parar e reiniciar o jogo em qualquer momento 
+9. O usuário poderá sair do jogo em qualquer momento. 
+10. ✅ Pelo menos um elemento passivo do jogo deverá se mover. 
 
 # Metodologia
 
@@ -25,28 +41,30 @@ Neste projeto, os estudantes de Engenharia de Computação da matéria Sistemas 
 * Processador Gráfico (GPU) desenvolvido por Gabriel Sá Barreto Alves
 * Monitor
 * Cabo VGA para conexão
-
-
+* Mouse
 
 ### 1\. Início do projeto
 
-* Tabela das instruções da GPU.
-* Código em C para escrever uma instrução.
+* Iniciamos o projeto implementando a movimentação do mouse
+* Desenvolvemos a geração de inimigos na tela.
+* Adicionamos a ação do player - o tiro com o click esquerdo do mouse.
 
+Com essas duas mecânicas, a base do projeto estava feita e a interface e cenário começaram a ser desenvolvidas.
 
 ### 2\. Análise do projeto a nível de hardware:
 
-* O que é o Kernel?
-* Como fazer um módulo do Kernel?
-* Como fazer a comunicação do espaço do usuário com o Kernel?
-* Como ocorre a passagem de dados do Kernel para a GPU?
+* Como utilizar o display de 7-segmentos para pontuação e vida?
+* Como utilizar os push-buttons para pause e início do jogo?
+* Como capturar as coordenadas e ações do mouse?
+* Como implementar o jogo de forma que 
 
+### 3\. Desenvolvimento do código
 
-### 3\. Desenvolvimento do código e integração com placa
+Para o desenvolvimento do jogo, foi necessário inicialmente descobrir como capturar a movimentação do mouse. Para isso, utilizamos a biblioteca linux/input.h, que nos permitiu identificar tanto o movimento do mouse quanto as ações de clique. Por ser um jogo, é fundamental que o movimento do mouse seja capturado continuamente. Para atender a essa necessidade, utilizamos uma thread dedicada a capturar as ações do mouse em tempo integral.
 
-* Desenvolvimento do módulo Kernel
-* Criação da biblioteca de funções com cada Instrução do Processador Gráfico
-* Desenvolvimento do código responsável pela geração do Driver do Processador Gráfico
+A partir das entradas das ações do mouse, implementamos diversas funcionalidades. Uma delas é a movimentação de uma sprite baseada no movimento do mouse. Esta sprite representa um carro, que é o elemento ativo do jogo. Este carro pode realizar uma ação: atirar. Para implementar essa ação, utilizamos uma sprite que representa um tiro. Quando o botão direito do mouse é clicado, a sprite do tiro é gerada na parte superior do carro e se move em linha reta, subindo pela tela até colidir com outra sprite ou atingir o fim da tela.
+
+O jogo também possui elementos passivos, que podem ser de dois tipos: carros inimigos ou combustível (gasolina). Esses elementos são representados por sprites; os carros são sprites fornecidas pela própria GPU, enquanto a gasolina é uma sprite criada a partir da instrução WSM. Ambos os elementos podem colidir com o elemento ativo (o carro) ou com o tiro. Se um carro inimigo colidir com o carro do jogador, uma vida é decrementada. Se o tiro colidir com um inimigo, um ponto é adicionado, e se colidir com a gasolina, ela é destruída.
 
 
 ### 4\. Ajustes
