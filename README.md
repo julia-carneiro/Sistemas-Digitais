@@ -61,18 +61,50 @@ Com essas duas mecânicas, a base do projeto estava feita e a interface e cenár
 
 ### 3\. Desenvolvimento do código
 
+####  Movimentação do mouse
 Para o desenvolvimento do jogo, foi necessário inicialmente descobrir como capturar a movimentação do mouse. Para isso, utilizamos a biblioteca linux/input.h, que nos permitiu identificar tanto o movimento do mouse quanto as ações de clique. Por ser um jogo, é fundamental que o movimento do mouse seja capturado continuamente. Para atender a essa necessidade, utilizamos uma thread dedicada a capturar as ações do mouse em tempo integral.
 
 A partir das entradas das ações do mouse, implementamos diversas funcionalidades. Uma delas é a movimentação de uma sprite baseada no movimento do mouse. Esta sprite representa um carro, que é o elemento ativo do jogo. Este carro pode realizar uma ação: atirar. Para implementar essa ação, utilizamos uma sprite que representa um tiro. Quando o botão direito do mouse é clicado, a sprite do tiro é gerada na parte superior do carro e se move em linha reta, subindo pela tela até colidir com outra sprite ou atingir o fim da tela.
-
+####  Sprites
 O jogo também possui elementos passivos, que podem ser de dois tipos: carros inimigos ou combustível (gasolina). Esses elementos são representados por sprites; os carros são sprites fornecidas pela própria GPU, enquanto a gasolina é uma sprite criada a partir da instrução WSM. Esses elementos surgem de forma aleatória no topo da tela de acordo com o passar do tempo. Ambos os elementos podem colidir com o elemento ativo (o carro) ou com o tiro. Se um carro inimigo colidir com o carro do jogador, uma vida é decrementada. Se o tiro colidir com um inimigo, um ponto é adicionado, e se colidir com a gasolina, ela é destruída.
 
-Para implementar as funcionalidades de iniciar e pausar o jogo, utilizamos os botões disponíveis na placa DE1_SoC. Uma thread foi criada para monitorar continuamente se os botões B0 ou B1 foram pressionados. Quando esses botões são pressionados, variáveis de controle são atualizadas para determinar se o jogo deve começar ou pausar.
+<p align="center">
+    <img src="img/gasolinaMaior.png"/>
+</p>  
+<p align="center">
+Sprite gasolina
+</p> 
 
+####  Botões
+Para implementar as funcionalidades de iniciar e pausar o jogo, utilizamos os botões disponíveis na placa DE1_SoC. Uma thread foi criada para monitorar continuamente se os botões B0 ou B1 foram pressionados. Quando esses botões são pressionados, variáveis de controle são atualizadas para determinar se o jogo deve começar, recomeçar, pausar ou sair do pause.
+
+#### Mostrador de 7 segmentos
 O mostrador de 7 segmentos foi utilizado para exibir a pontuação do jogador e a quantidade de vidas restantes. Desenvolvemos uma função que decodifica e envia as informações para o mostrador de 7 segmentos. Assim, sempre que há uma mudança na pontuação ou na quantidade de vidas, essa função é chamada para atualizar as informações exibidas.
 
+####  Telas do jogo
 O jogo possui diferentes telas: a tela inicial, a tela de pausa e a tela de game over. Para criar essas telas, utilizamos um aplicativo de edição de imagem para criar as imagens necessárias. Em seguida, um script em Python foi desenvolvido para ler os valores RGB de cada pixel da imagem e normalizar esses valores, já que a GPU utilizada só aceita valores de RGB entre 0 e 7. Após ler e normalizar esses valores, os dados de cada pixel são escritos em um arquivo de texto. Quando é necessário exibir uma imagem, lemos esses arquivos e inserimos as informações coletadas na instrução WBM, permitindo que a imagem seja exibida na tela.
 
+<p align="center">
+    <img src="img/inicial.png" width="300" height="200"/>
+</p>  
+
+
+<p align="center">
+Tela inicial
+</p> 
+<p align="center">
+    <img src="img/pause.png" width="300" height="200"/>
+</p>  
+<p align="center">
+Tela de pause
+</p>  
+
+<p align="center">
+    <img src="img/gameover.png" width="300" height="200"/>
+</p>  
+<p align="center">
+Tela de game over
+</p>  
 ### 4\. Ajustes
 
 * Verificar jogabilidade do jogo.
