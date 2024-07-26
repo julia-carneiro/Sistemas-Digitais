@@ -12,7 +12,7 @@ Conteúdo desenvolvido durante a matéria de PBL de Sistemas Digitais.
 O ex-aluno do curso de Engenharia de Computação na UEFS (Universidade Estadual de Feira de Santana) Gabriel Sá Barreto Alves, durante suas atividades de iniciação científica e em seu trabalho de conclusão de curso, projetou e implementou uma GPU capaz de mover e controlar elementos em um monitor VGA com resolução de 640x480 pixels. Esse processador foi projetado para desenhar dois tipos de polígonos convexos (quadrado e triângulo), além de editar, criar e manipular uma quantidade determinada de sprites. Para realizar essas tarefas, Gabriel utilizou o NIOS II como unidade de processamento principal, que foi embarcada na mesma FPGA que o Processador Gráfico.
 
 Utilizando esse dispostivo, utilizamos uma biblioteca que foi devolvida para tornar mais intuitivo o uso das instruções e conseguir traduzir os dados enviados do modo de usuário para o modo de Kernel de modo que a GPU seja capaz de executá-las. 
-Com o intuito de aplicar a biblioteca, neste projeto criamos um jogo chamdo "Top Grilo", que é um jogo de ação com carros onde o jogador deve desviar e atirar em outros carros para receber uma pontuação, além disso, é preciso manter o tanque cheio - o jogador vai perdendo gasolina ao longo do tempo e precisa repor. 
+Com o intuito de aplicar a biblioteca, neste projeto criamos um jogo chamdo "Top Grilo", que é um jogo de ação com carros onde o jogador deve desviar e atirar em outros carros para receber uma pontuação, além disso, é preciso manter o tanque cheio - o jogador vai perdendo gasolina ao longo do tempo e precisa repor - caso acabe a gasolina ou seja atingido 3 vezes por um carro, o jogador perde. Outra coisa interessante é o aumento de dificuldade gradual - com o passar o tempo, a velocidade que os carros inimigos são gerados é aumentada e fica cada vez mais dificil se manter vivo!
 
 # Como jogar?
 O jogador controla o movimento do carro com o mouse, podendo andar para qualquer direção dentro da pista. 
@@ -34,6 +34,7 @@ O jogador controla o movimento do carro com o mouse, podendo andar para qualquer
 10. ✅ Pelo menos um elemento passivo do jogo deverá se mover. 
 
 # Metodologia
+Este tópico trata sobre os passos e questionamentos que enfrentamos durante o desenvolvimento do projeto. 
 
 ### Ferramentas utilizadas:
 * Kit FPGA DE1-SoC
@@ -69,62 +70,40 @@ O jogo também possui elementos passivos, que podem ser de dois tipos: carros in
 
 ### 4\. Ajustes
 
-* Testes e correções no funcionamento do código
+* Verificar jogabilidade do jogo.
+* Testes e correções no funcionamento do código.
 
 # Descrição do Projeto
 
-## Processador Gráfico
-<p align="center">
-    <img src="img/diagrama.png" />
-</p>
-
-## Módulo Kernel 
-Módulos Kernel surgem da necessidade de estender a funcionalidade do kernel do sistema operacional para suportar novos dispositivos ou fornecer novas funcionalidades. 
-Assim, no contexto retratado, para realizar a comunicação entre o processador ARM (HPS) e a GPU embarcada na mesma FPGA é necessário o desenvolvimento desse módulo para o Linux. Além disso, para que essa comunicação seja realizada de maneira eficaz e segura entre o hardware e o sistema operacional, surge a necessidade de um driver de dispositivo, também essencial para a criação da biblioteca solicitada, abstraindo a complexidade na comunicação e apresentando uma interface de leitura/escrita padrão do Linux utilizada em qualquer comunicação hardware-software.
-
-### Mapeamento de memória virtual
-
-O processador apenas executa instruções e referência dados residentes no espaço de endereçamento real, portanto, deve existir um mecanismo que transforme os endereços virtuais em endereços reais. Esse mecanismo, conhecido por mapeamento, permite traduzir um endereço localizado no espaço virtual para um associado no espaço real. Como consequência do mapeamento, um programa não mais precisa estar necessariamente em endereços contíguos na memória principal para ser executado.
-
-<p align="center">
-    <img src="img/mapeamento.jpg" />
-</p>
-
-Utilizando como um documento de endereçamento da GPU fornecido pelo professor, foi desenvolvido um código em C responsável por ambas as funções, gerar o módulo Kernel e o Driver.
-
-<p align="center">
-    <img src="img/enderecos1.png" />
-</p>
-
-<p align="center">
-    <img src="img/enderecos2.png" />
-</p>
-
+Como já explicado na introdução, os pontos principais do jogo são:
+- É um jogo de ação
+- Jogador deve evitar colisões com carros
+- Atire em inimigos para ganhar pontuação
+- Caso perca 3 vidas, o jogo acaba.
+- Aumento de dificuldade gradual
 
 ## Instruções da GPU
 
 ### Escrita no Banco de Registradores (WBR):
-Essa instrução é responsável por configurar os registradores que armazenam as informações dos sprites e a cor base do background. Como essa cor base é armazenada no primeiro registrador do Banco, a instrução WBR segue a estrutura apresentada na figura abaixo, a primeira parte é referente a modificação da cor base do background, já a segunda parte é referente a adição de sprites à tela.
-
-<p align="center">
-    <img src="img/wbr.png"/>
-</p>
+Essa instrução é responsável por configurar os registradores que armazenam as informações dos sprites e a cor base do background. Foi utilizada para criar a cor cinza da pista no cenário jogo.
 
 ### Escrita na Memória de Sprites (WSM):
 Essa instrução armazena ou modifica o conteúdo presente na Memória de Sprites. O campo opcode é semelhante a instrução anterior, no entanto, seu valor é configurado em 0001. O campo endereço  de memória  ́ especifica qual local da memória será alterado. Os campos R, G e B definem as novas componentes RGB para o local desejado.
-
-<p align="center">
-    <img src="img/wsm.png"/>
-</p>
+Com esta instrução, acrescentamos o sprite de gasolina - um item que pode ser coletado pelo jogador. 
 
 ### Escrita na Memória de Background (WBM):
-Essa instrução armazena ou modifica o conteúdo presente na Memória de Background. Sua função é configurar valores RGB para o preenchimento de áreas do background. Seus campos são semelhantes ao da instrução WSM a única diferença  está no campo de  endereço de memória  com tamanho de 12 bits. O valor do opcode é configurado como 0010. O background é dividido em pequenos blocos de 8x8 pixels e cada endereço de memória corresponde a um bloco. Sendo a resolução de 640x480 pixels, temos uma divisão de 80x60 blocos. 
+Essa instrução armazena ou modifica o conteúdo presente na Memória de Background. Sua função é configurar valores RGB para o preenchimento de áreas do background. Seus campos são semelhantes ao da instrução WSM a única diferença está no campo de  endereço de memória  com tamanho de 12 bits. O background é dividido em pequenos blocos de 8x8 pixels e cada endereço de memória corresponde a um bloco. Sendo a resolução de 640x480 pixels, temos uma divisão de 80x60 blocos. 
+Com isto fomos capazes de criar as telas de início, pause e game over - cada pixel do desenho foi traduzido como código RGB e utilizado pela instrução. 
 
-Isso permite que o background seja configurado de formas diferentes de acordo com o preenchimento da memória (Fig. 11). Se um endereço for preenchido com o valor 0b111111110 = 510, o Módulo de Desenho entenderá que o bloco correspondente está  desabilitado, assim ocupando os pixels da área com a cor base do background, um polígono ou sprite, caso suas coordenadas coincidam com o bloco.
+# Push Buttons
 
-<p align="center">
-    <img src="img/wbm1.png"/>
-</p>
+Para possibilitar a interação com os botões, foi necessário acessar diretamente os registradores de hardware que os controlam. Portanto, deve existir um mecanismo que transforme os endereços virtuais em endereços reais. Esse mecanismo, conhecido por mapeamento, permite traduzir um endereço localizado no espaço virtual para um associado no espaço real. Como consequência do mapeamento, um programa não mais precisa estar necessariamente em endereços contíguos na memória principal para ser executado. Fazemos isso através do dispositivo /dev/mem no Linux, que permite mapeamento de memória física para o espaço de endereçamento virtual do processo. 
+
+Assim, foram definidas constantes para a base da ponte lightweight, a extensão e o offset dos botões com base na documentação de endereçamento da GPU fornecida pelo professor e desenvolvido no código uma função responsável por acessar à memória, monitorar os botões e alterar as variáveis “iniciou” e “parar” responsáveis pelo controle do jogo.
+
+# Display 7-segmentos
+
+Para configuração e utilização do display de 7-segmentos também se fez necessário realizar o processo de mapeamento de memória assim como feito nos push-buttons. Além disso, foi preciso a criação de uma função para decodificar números decimais em seu equivalente binário para o tipo de display usado
 
 # Como rodar o jogo?
 
@@ -161,61 +140,28 @@ Isso permite que o background seja configurado de formas diferentes de acordo co
     <img src="img/inicial.png"/>
 </p>
 
-* Por fim, lembre se de que você não precisa editar nenhum arquivo, apenas use um arquivo main.c que tenha "biblioteca.c" incluída e utilize as funções que disponibilizamos. Caso precise consultar, o arquivo da biblioteca está disponibilizado e comentado de forma que qualquer um consegue entender! :) 
 
 # Testes
 
 * Ao longo do projeto diversos testes foram executados.
-* Uma das primeiras metas estabelecidas foi a criação do módulo kernel, e foram lá que os testes tiveram início. Inserindo uma cadeia de bits referente a uma instrução específica, conseguimos mostrar as primeiras imagens no monitor.
-* Depois avançamos para a contrução da biblioteca, na tentativa de estabelecer uma conexão entre o espaço do usuário com o kernel.
-
-Este é um exemplo de código de teste com instruções básicas: 
-
-```C
-#include "biblioteca.c"
-
-int main(){
-    //Testando background branco
-    wbr01(7,7,7);
-
-    //O bloco é definido a partir do endereço que você coloca.
-    for(int i = 0; i <2000; i++) {
-        wbm (0,0,7,1);
-    }
-
-    dp(1, 7, 0, 0, 0b0101, 320, 240, 0); // Triangulo vermelho
-    dp (0, 0, 7, 0, 0b0011, 200, 250, 1); // Quadrado verde
-    wbr02(100, 240, 4, 1, 6); //Sprite
-
-    //Editando um sprite - desenhando um quadrado com duas cores
-    for (int i = 1; i <= 200; i++) {
-        wsm (0, 7, 0, i);
-    for (int j = 200; j <= 400; j++) {
-        wsm (7, 7, 0, j);
-    }
-
-    //Adiciona sprite editado na tela
-    wbr02 (380, 40, 0, 1, 14);
-
-    return 0;
-}
-```
-Ele deve resultar na seguinte imagem:
+* Os principais testes foram relacionados a colisão e jogabilidade do jogo. Além disso, também nos preocupamos com o funcionamento correto das telas. 
 
 <p align="center">
-    <img src="img/imgteste.jpeg"/>
+    <img src="img/gif_jogo.gif"/>
 </p>
 
 # Resultados e Conclusão:
 
-O resultado do trabalho desenvolvido é um programa que permite interação entre hardware e software  através do kit FPGA DE1-SoC. Através do desenvolvimento desse programa foi possível aprender a respeito de mapeamento de memória em uma arquitetura ARM, como utilizar a interface de conexão entre HPs e o FPGA da DE1-SoCe e outros diversos assuntos e conceitos que foram utilizados durante o processo de criação do projeto.
-
-A respeitos dos requisitos esperados para este projeto, todos foram alcançados, como, ter no mínimo uma função para cada instrução da GPU e a biblioteca seguir as recomendações que foram dadas. Por fim, o projeto final teve os resultados esperados e conseguiu atender aos requisitos que foram impostos.
-
+O resultado do trabalho desenvolvido é um jogo simples e funcional, com boa jogabilidade. 
+A respeitos dos requisitos esperados para este projeto, todos foram alcançados com exceção do botão de saída do jogo. 
+O desenvolvimento desse projeto foi muito importante para juntar e assimilar todos os desafios dos PBLs anteriores e com isso fomos capazes de implementar um produto do início ao fim, aproveitando recursos que desenvolvemos anteriormente.
 
 # Possíveis melhorias:
 
-Como possíveis melhorias desse projeto a diversas possibilidades, por se tratar da utilização de uma GPU para exibir imagens da tela, a uma grande quantidade de possibilidades. Uma possibilidade é utilizar o hardware da DE1-SoC para poder interagir com  a imagem que está sendo exibida na tela, podendo mover sprites ou polígonos a través de comandos no hardware, podendo até desenvolver um jogo simples.
+- Mostrar vida na tela, similar a gasolina.
+- Adicionar trilha e efeitos sonoros.
+- Trazer upgrades e habilidades diferentes para o player.
+- Fazer otimizações para melhorar desempenho do jogo.
 
 # Referências:
 
@@ -227,9 +173,6 @@ Alves, Gabriel Barreto; Dias, Anfranserai M.; Sarinho, Victor T. Desenvolvimento
 Disponível em: https://drive.google.com/file/d/1MlIlpB9TSnoPGEMkocr36EH9-CFz8psO/view. Acesso em: 14 jun. 2024.
 
 Memória Virtual: Mapeamento. Disponível em: <https://memoriavirtualunisc.blogspot.com/p/mapeamento.html>.
-
-‌
-
 
 --
 
