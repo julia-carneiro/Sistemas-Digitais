@@ -9,9 +9,9 @@ Conteúdo desenvolvido durante a matéria de PBL de Sistemas Digitais.
 
 ## Organização 
 Visando organizar os projetos em único repositório, cada projeto está organizado em branchs separadas.
-* PBL-1: Sistema Digital (Jogo da Velha)
+* PBL-1: Jogo da Velha
 * PBL-2: Barramentos (Utilizando GPU)
-* PBL-3: ...
+* PBL-3: Jogo - Top Grilo 
 
 ### Ferramentas utilizadas constantemente:
 * Kit FPGA DE1-SoC
